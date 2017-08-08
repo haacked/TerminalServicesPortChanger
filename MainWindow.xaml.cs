@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,36 @@ namespace TerminalServicesPortChanger
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var portKey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\TerminalServer\WinStations\RDP-Tcp"))
+                {
+                    port.Text = portKey.GetValue("PortNumber")?.ToString() ?? "3389";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void changeButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var portKey = Registry.LocalMachine.CreateSubKey(@"SYSTEM\CurrentControlSet\Control\TerminalServer\WinStations\RDP-Tcp"))
+                {
+                    portKey.SetValue("PortNumber", Convert.ToInt32(port.Text), RegistryValueKind.DWord);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

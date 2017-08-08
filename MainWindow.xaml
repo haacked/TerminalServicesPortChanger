@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TerminalServicesPortChanger"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Haacked Terminal Services Port Changer"
+        Height="140"
+        Width="400"
+        ResizeMode="NoResize" Loaded="Window_Loaded">
+    <StackPanel>
+        <TextBlock Margin="8px" FontSize="16px" TextWrapping="Wrap">Terminal Services runs on the following port...</TextBlock>
+        <StackPanel Orientation="Horizontal" Margin="0 8px 0 0">
+            <Label Content="Port:" Target="{Binding ElementName=port}" FontSize="24px" Margin="8px 0 0 0" />
+            <TextBox Name="port" FontSize="24px" Width="200px" Margin="0 0 8px 0" />
+            <Button Name="changeButton" Content="Change" FontSize="24px" Width="100px" Click="changeButton_Click" IsDefault="True" />
+        </StackPanel>
+    </StackPanel>
 </Window>
